@@ -24,6 +24,14 @@
 <cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
 	<cas:authenticationSuccess>
 		<cas:user>${fn:escapeXml(assertion.primaryAuthentication.principal.id)}</cas:user>
+        <c:if test="${not empty assertion.primaryAuthentication.principal.attributes}">
+            <cas:attributes>
+                <c:forEach items="${assertion.primaryAuthentication.principal.attributes}" var="entry">  
+                    <cas:${entry.key}>${entry.value}</cas:${entry.key}>
+                </c:forEach>  
+             </cas:attributes>
+        </c:if>
+		
         <c:if test="${not empty pgtIou}">
         		<cas:proxyGrantingTicket>${pgtIou}</cas:proxyGrantingTicket>
         </c:if>
